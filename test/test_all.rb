@@ -6,7 +6,7 @@ class CompletionProgressTest < Test::Unit::TestCase
   class User
     include CompletionProgress
 
-    attr_accessor :name, :surname, :age, :phones, :options
+    attr_accessor :name, :surname, :age, :phones, :options, :custom_value
 
     def initialize
       @phones = Array.new
@@ -41,6 +41,9 @@ class CompletionProgressTest < Test::Unit::TestCase
       step :name, 5
       step :phones, 5
       step :options, 5
+      step :custom, 5 do
+        @custom_value
+      end
     end
 
   end
@@ -110,6 +113,24 @@ class CompletionProgressTest < Test::Unit::TestCase
 
     user.options['test'] = 'hello'
     assert_equal(user.profile_steps.value, 15)
+
+    user.custom_value = true
+    assert_equal(user.profile_steps.value, 20)
+  end
+
+  def test_hints
+    user = User.new
+    assert_not_nil(user.profile1.hints)
+    assert_equal(user.profile1.hints.count, 3)
+
+    user.name = 'Mirko'
+    assert_equal(user.profile1.hints.count, 2)
+
+    user.surname = 'Mignini'
+    assert_equal(user.profile1.hints.count, 1)
+
+    user.age = 33
+    assert_equal(user.profile1.hints.count, 0)
   end
 
 end

@@ -1,29 +1,40 @@
+require_relative 'hint'
+
 class Step
-  attr_accessor :name, :value, :block, :status
+  attr_accessor :name, :value, :block, :status, :hint
 
   def initialize(name, value, options = {}, &block)
     @name = name
     @value = value
     @block = block
     @status = false
+
+    if (options.has_key?(:hint))
+
+    else
+      @hint = Hint.new('ciao', self)
+    end
   end
 
   def process(obj)
     begin
+
       if !@block
         val = obj.send(@name)
-        if val.kind_of?(Array) or val.kind_of?(Hash)
-          @status = val.count == 0 ? false : true
-        else
-          @status = val
-        end
       else
-        @status = obj.eval(@block)
+        val = obj.instance_eval(&@block)
       end
+
+      if val.kind_of?(Array) or val.kind_of?(Hash)
+        @status = val.count == 0 ? false : true
+      else
+        @status = val
+      end
+
     rescue Exception => e
-      puts e.message
       @status = false
+    ensure
+      @status
     end
-    @status
   end
 end

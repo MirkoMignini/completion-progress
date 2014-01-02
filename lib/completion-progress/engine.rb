@@ -25,7 +25,7 @@ class Engine
       if step.process(parent)
         @value += step.value
       else
-        #todo hint
+        @hints << step.hint
       end
     end
     #todo percent
