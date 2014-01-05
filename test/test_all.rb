@@ -1,7 +1,7 @@
-require 'test/unit'
+require 'minitest/autorun'
 require_relative '../lib/completion-progress'
 
-class CompletionProgressTest < Test::Unit::TestCase
+class CompletionProgressTest < Minitest::Test
 
   class User
     include CompletionProgress
@@ -14,7 +14,7 @@ class CompletionProgressTest < Test::Unit::TestCase
     end
 
     completion_progress :profile1 do
-      step :name, 40
+      step :name, 40, {hint: {text: 'Test hint', href: '/profile/edit', options: {custom: 10}}}
       step :surname, 40
       step :age, 20
     end
@@ -46,31 +46,39 @@ class CompletionProgressTest < Test::Unit::TestCase
       end
     end
 
+    completion_progress :profile_percent do
+      step :name, 10
+      step :surname, 10
+      step :age, 10
+      step :phones, 10
+      step :custom_value, 10
+    end
+
   end
 
   def test_setup
     user = User.new
-    assert_not_nil(user)
+    refute_nil(user)
   end
 
   def test_add_method
     user = User.new
-    assert_not_nil(user.profile1)
-    assert_not_nil(user.profile2)
+    refute_nil(user.profile1)
+    refute_nil(user.profile2)
   end
 
   def test_steps
     user = User.new
     assert_equal(user.profile1.steps.count, 3)
 
-    assert_not_nil(user.profile1.steps[:name])
+    refute_nil(user.profile1.steps[:name])
     assert_equal(user.profile1.steps[:name].value, 40)
 
     assert_equal(user.profile1.steps[:surname].value, 40)
-    assert_not_nil(user.profile1.steps[:surname])
+    refute_nil(user.profile1.steps[:surname])
 
     assert_equal(user.profile1.steps[:age].value, 20)
-    assert_not_nil(user.profile1.steps[:age])
+    refute_nil(user.profile1.steps[:age])
   end
 
   def test_values
@@ -120,8 +128,16 @@ class CompletionProgressTest < Test::Unit::TestCase
 
   def test_hints
     user = User.new
-    assert_not_nil(user.profile1.hints)
+    refute_nil(user.profile1.hints)
     assert_equal(user.profile1.hints.count, 3)
+
+    assert_equal(user.profile1.hints[:name].text, 'Test hint')
+    assert_equal(user.profile1.hints[:name].href, '/profile/edit')
+    assert_equal(user.profile1.hints[:name].options[:custom], 10)
+
+    assert_equal(user.profile1.hints[:surname].text, 'Fill surname')
+    assert_equal(user.profile1.hints[:surname].href, '')
+    assert_equal(user.profile1.hints[:surname].options.count, 0)
 
     user.name = 'Mirko'
     assert_equal(user.profile1.hints.count, 2)
@@ -131,6 +147,26 @@ class CompletionProgressTest < Test::Unit::TestCase
 
     user.age = 33
     assert_equal(user.profile1.hints.count, 0)
+  end
+
+  def test_percent
+    user = User.new
+    assert_equal(user.profile_percent.percent, 0)
+    user.name = 'Mirko'
+    assert_equal(user.profile_percent.percent, 20)
+    user.surname = 'Mignini'
+    assert_equal(user.profile_percent.percent, 40)
+    user.age = 33
+    assert_equal(user.profile_percent.percent, 60)
+    user.phones = '0911234567'
+    assert_equal(user.profile_percent.percent, 80)
+    user.custom_value = 'test'
+    assert_equal(user.profile_percent.percent, 100)
+  end
+
+  def test_partials
+    user = User.new
+    assert_equal(user.partial_profile.steps.count, 2)
   end
 
 end

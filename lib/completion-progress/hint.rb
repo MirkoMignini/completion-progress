@@ -1,9 +1,9 @@
 class Hint
-  attr_accessor :text, :step, :href, :options
+  attr_accessor :step, :text, :href, :options
 
-  def initialize(text, step, href = '', options = {})
-    @text = text
+  def initialize(step, text, href = '', options = {})
     @step = step
+    @text = text
     @href = href
     @options = options
   end

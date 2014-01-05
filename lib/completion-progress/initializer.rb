@@ -9,16 +9,17 @@ module CompletionProgress
 
   module ClassMethods
 
-    def completion_progress(name, options = {}, &block)
+    @@engines = Hash.new
 
-      if !respond_to?(name)
+    def completion_progress(name, options = {}, &block)
+      engine = @@engines[name]
+      if engine == nil
         engine = Engine.new(options, &block)
+        @@engines[name] = engine
         define_method(name) do
           engine.parent = self
           engine
         end
-      else
-        engine = send(name)
       end
       engine.instance_eval(&block) if block
     end

@@ -10,9 +10,9 @@ class Step
     @status = false
 
     if (options.has_key?(:hint))
-
+      @hint = Hint.new(self, options[:hint][:text], options[:hint][:href], options[:hint][:options])
     else
-      @hint = Hint.new('ciao', self)
+      @hint = Hint.new(self, "Fill #{name}")
     end
   end
 

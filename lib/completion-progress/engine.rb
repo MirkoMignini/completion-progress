@@ -6,7 +6,7 @@ class Engine
   def initialize(options = {}, &block)
     @value = 0
     @percent = 0
-    @hints = Array.new
+    @hints = Hash.new
     @auto_update = options.has_key?(:auto_update) ? options[:auto_update] : true
     @steps = Hash.new
   end
@@ -20,15 +20,13 @@ class Engine
   def update
     @value = 0
     @percent = 0
-    @hints = Array.new
+    total = 0
+    @hints = Hash.new
     @steps.each do |key, step|
-      if step.process(parent)
-        @value += step.value
-      else
-        @hints << step.hint
-      end
+      step.process(parent) ? @value += step.value : @hints[step.name] = step.hint
+      total += step.value
     end
-    #todo percent
+    @percent = @value * 100 / total
   end
 
   def value
