@@ -74,11 +74,35 @@ class CompletionProgressTest < Minitest::Test
     refute_nil(user.profile1.steps[:name])
     assert_equal(user.profile1.steps[:name].value, 40)
 
-    assert_equal(user.profile1.steps[:surname].value, 40)
     refute_nil(user.profile1.steps[:surname])
+    assert_equal(user.profile1.steps[:surname].value, 40)
 
-    assert_equal(user.profile1.steps[:age].value, 20)
     refute_nil(user.profile1.steps[:age])
+    assert_equal(user.profile1.steps[:age].value, 20)
+  end
+
+  def test_results
+    user = User.new
+    assert_equal(user.profile1.steps.count, 3)
+
+    assert_equal(user.profile1.steps[:name].result, false)
+    assert_equal(user.profile1.steps[:surname].result, false)
+    assert_equal(user.profile1.steps[:age].result, false)
+
+    user.name = 'Mirko'
+    assert_equal(user.profile1.steps[:name].result, true)
+    assert_equal(user.profile1.steps[:surname].result, false)
+    assert_equal(user.profile1.steps[:age].result, false)
+
+    user.surname = 'Mignini'
+    assert_equal(user.profile1.steps[:name].result, true)
+    assert_equal(user.profile1.steps[:surname].result, true)
+    assert_equal(user.profile1.steps[:age].result, false)
+
+    user.age = 33
+    assert_equal(user.profile1.steps[:name].result, true)
+    assert_equal(user.profile1.steps[:surname].result, true)
+    assert_equal(user.profile1.steps[:age].result, true)
   end
 
   def test_values

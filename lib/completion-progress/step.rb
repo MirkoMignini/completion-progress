@@ -1,13 +1,13 @@
 require_relative 'hint'
 
 class Step
-  attr_accessor :name, :value, :block, :status, :hint
+  attr_accessor :name, :value, :block, :result, :hint
 
   def initialize(name, value, options = {}, &block)
     @name = name
     @value = value
     @block = block
-    @status = false
+    @result = false
 
     if (options.has_key?(:hint))
       @hint = Hint.new(self, options[:hint][:text], options[:hint][:href], options[:hint][:options])
@@ -26,15 +26,15 @@ class Step
       end
 
       if val.kind_of?(Array) or val.kind_of?(Hash)
-        @status = val.count == 0 ? false : true
+        @result = val.count == 0 ? false : true
       else
-        @status = val
+        @result = val
       end
 
     rescue Exception => e
-      @status = false
+      @result = false
     ensure
-      @status
+      @result ? @result = true : @result = false
     end
   end
 end
