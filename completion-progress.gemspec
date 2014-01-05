@@ -13,5 +13,7 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- test/*`.split("\n")
   s.require_paths = ['lib']
 
-  s.add_development_dependency 'minitest'
+  s.add_development_dependency 'bundler', '~> 1.3'
+  s.add_development_dependency 'rake'
+  s.add_development_dependency 'minitest', '~> 4.7'
 end
