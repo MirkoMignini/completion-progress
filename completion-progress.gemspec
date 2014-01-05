@@ -13,5 +13,5 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- test/*`.split("\n")
   s.require_paths = ['lib']
 
-  s.add_development_dependency 'minitest/autorun'
+  s.add_development_dependency 'minitest'
 end
