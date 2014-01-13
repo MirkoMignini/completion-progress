@@ -24,6 +24,21 @@ Then:
 TODO
 
 ```ruby
+class User
+    include CompletionProgress
+
+    ...
+
+    completion_progress :profile1 do
+      step :name, 30
+      step :surname, 30
+      step :email, 20
+      step :age, 10, {hint: {text: 'Please add your age', href: '/profile/edit'}}
+      step :phones, 10, {hint: {text: 'Please add at least a phone number', href: '/profile/edit/phones'}}
+    end
+
+    ...
+end
 ```
 
 ## License
