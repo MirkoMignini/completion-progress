@@ -29,7 +29,7 @@ class User
 
     ...
 
-    completion_progress :profile1 do
+    completion_progress :profile do
       step :name, 30
       step :surname, 30
       step :email, 20
