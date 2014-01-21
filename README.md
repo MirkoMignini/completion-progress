@@ -43,4 +43,4 @@ end
 
 ## License
 
-MIT License. Copyright 2014 Mirko Mignini (https://github.com/MirkoMignini)
+MIT License. Copyright 2014 by Mirko Mignini (https://github.com/MirkoMignini)
