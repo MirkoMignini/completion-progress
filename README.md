@@ -3,7 +3,7 @@
 completion-progress
 ===================
 
-DSL for defining objects completion level (score and percentage), like LinkedIn or Facebook, but works with every object!
+DSL to calculate completion level (in percentage or score) of an object based on the value of its properties.
 
 ## Requirements
 
@@ -21,13 +21,12 @@ Then:
 
 ## Usage
 
-TODO
+Use the completion-progress dsl to define the steps.
+For every step define a name, a value (in percentage or a custom value) and, optionally, a hint to explain the user how to complete the step.
 
 ```ruby
 class User
     include CompletionProgress
-
-    ...
 
     completion_progress :profile do
       step :name, 30
@@ -36,9 +35,16 @@ class User
       step :age, 10, {hint: {text: 'Please add your age', href: '/profile/edit'}}
       step :phones, 10, {hint: {text: 'Please add at least a phone number', href: '/profile/edit/phones'}}
     end
-
+    
     ...
 end
+
+user = User.new
+
+#set the user properties to custom values
+
+user.profile.value #will contains the sum of the values of all the steps which value is not null or empty
+user.profile1.steps[:name].result #check the result (true or false) of a single step
 ```
 
 ## License
