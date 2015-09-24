@@ -1,11 +1,11 @@
 Gem::Specification.new do |s|
   s.name        = 'completion-progress'
-  s.version     = '0.0.1'
+  s.version     = '0.0.2'
   s.platform    = Gem::Platform::RUBY
   s.licenses    = ['MIT']
   s.summary     = 'Easy progress calculator'
   s.description = s.summary
-  s.email       = 'mirko.mignini@libero.it'
+  s.email       = 'mirko.mignini@gmail.com'
   s.homepage    = 'https://github.com/MirkoMignini/completion-progress'
   s.authors     = ['Mirko Mignini']
 
