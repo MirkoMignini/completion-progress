@@ -1,2 +1,4 @@
 .idea/
 *.project
+completion-progress-*.gem
+Gemfile.lock
