@@ -60,6 +60,14 @@ user.profile.steps[:name].result #to check the result (true or false) of a singl
 user.profile.hints #will contains a collection of hints for the failed steps
 ```
 
+## Contributing
+
+1. Fork it ( http://github.com/MirkoMignini/completion-progress/fork )
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
+
 ## License
 
 MIT License. Copyright 2014 by Mirko Mignini (https://github.com/MirkoMignini)
