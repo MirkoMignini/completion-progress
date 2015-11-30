@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/MirkoMignini/completion-progress.png?branch=master)](https://travis-ci.org/MirkoMignini/completion-progress)
 [![Coverage Status](https://coveralls.io/repos/MirkoMignini/completion-progress/badge.svg?branch=master&service=github)](https://coveralls.io/github/MirkoMignini/completion-progress?branch=master)
+[![Gem Version](https://badge.fury.io/rb/completion-progress.svg)](https://badge.fury.io/rb/completion-progress)
 
 completion-progress
 ===================
